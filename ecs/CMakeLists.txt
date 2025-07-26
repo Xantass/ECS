@@ -11,8 +11,6 @@ set(SRC
 
 add_library(ecs ${SRC})
 
-add_subdirectory(auto)
-
 target_include_directories(ecs 
     PUBLIC
         includes

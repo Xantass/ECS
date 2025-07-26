@@ -5,6 +5,8 @@ set(SRC
 
 add_executable(rtype ${SRC})
 
+add_subdirectory(auto)
+
 target_include_directories(rtype 
     PUBLIC
         includes
