@@ -1,6 +1,5 @@
 set(SRC
     src/Registry.cpp
-    src/systems/BulletSystem.cpp
     src/systems/CollisionSystem.cpp
     src/systems/CooldownSystem.cpp
     src/systems/GravitySystem.cpp
@@ -18,6 +17,6 @@ target_include_directories(ecs
         includes/events
         includes/systems
 )
-target_link_libraries(ecs PUBLIC core)
 
+target_link_libraries(ecs PUBLIC raylib)
 
