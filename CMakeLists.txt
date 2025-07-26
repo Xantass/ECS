@@ -14,7 +14,7 @@ include(cmake/CPM.cmake)
 CPMAddPackage(
   NAME raylib
   GITHUB_REPOSITORY raysan5/raylib
-  GIT_TAG master         # ou GIT_TAG 4.5.0 si rétrocompatibilité + cmake_policy
+  GIT_TAG 5.5         # ou GIT_TAG 4.5.0 si rétrocompatibilité + cmake_policy
   OPTIONS "BUILD_EXAMPLES OFF" "BUILD_GAMES OFF"
 )
 
