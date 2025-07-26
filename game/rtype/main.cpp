@@ -11,6 +11,8 @@
 
 #include "raylib.h"
 
+void setupReaction(Registry& registry);
+
 int main() {
     Engine engine(1920, 1080, "R-Type Engine");
 
@@ -25,8 +27,9 @@ int main() {
     registry.addComponent(player, Speed{300});
     registry.addComponent(player, Collider{static_cast<float>(registry.getAssetManager().getTexture("player").width), static_cast<float>(registry.getAssetManager().getTexture("player").height)});
     registry.addComponent(player, Cooldown{0.0f, 0.2f});
-    setupActions(registry, player);
 
+    setupActions(registry, player);
+    setupReaction(registry);
 
     Entity enemy = registry.createEntity();
     registry.addComponent(enemy, Position{900, 100});

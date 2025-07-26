@@ -7,6 +7,7 @@
 #include "Position.hpp"
 #include "Registry.hpp"
 #include "raylib.h"
+#include "CollisionEvent.hpp"
 
 class CollisionSystem : public ISystem {
 public:

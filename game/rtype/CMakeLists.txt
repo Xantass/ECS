@@ -1,6 +1,7 @@
 set(SRC
     main.cpp
     src/InputAction.cpp
+    src/ReactionSystem.cpp
 )
 
 add_executable(rtype ${SRC})
