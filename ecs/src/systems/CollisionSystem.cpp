@@ -38,7 +38,7 @@ void CollisionSystem::update(Registry &registry, float /*dt*/)
 
                 if (checkAABBCollision(aPos, aCol, bPos, bCol))
                 {
-                    registry.getEventBus().emit(CollisionEvent(a, b));
+                    registry.getEventBus().emit(CollisionEvent{a, b});
                     break;
                 }
             }
