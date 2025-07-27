@@ -6,6 +6,7 @@ set(SRC
     src/systems/InputSystem.cpp
     src/systems/MovementSystem.cpp
     src/systems/RenderSystem.cpp
+    src/systems/LifeSystem.cpp
 )
 
 add_library(ecs ${SRC})

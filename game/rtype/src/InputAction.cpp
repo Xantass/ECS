@@ -43,14 +43,15 @@ void setupActions(Registry &registry, Entity playerId)
     };
     actions[InputType::KeySpace] = [&registry, playerId]()
     {   
-        auto bullet = registry.createEntity();
         auto &pos = registry.getComponent<Position>(playerId);
         auto &cooldown = registry.getComponent<Cooldown>(playerId);
 
+        if (cooldown.timer < cooldown.interval) return;
+        auto bullet = registry.createEntity();
         cooldown.timer = 0.0f;
         registry.addComponent(bullet, Position{pos.x + 100, pos.y + 20});
         registry.addComponent(bullet, Velocity{500, 0});
-        registry.addComponent(bullet, Bullet{2.0f});
+        registry.addComponent(bullet, Bullet{2.0f, 50});
         registry.addComponent(bullet, Sprite{registry.getAssetManager().getTexture("bullet"), 1.0f});
         registry.addComponent(bullet, Collider{static_cast<float>(registry.getAssetManager().getTexture("bullet").width), static_cast<float>(registry.getAssetManager().getTexture("bullet").height)});
     };

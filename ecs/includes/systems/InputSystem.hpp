@@ -9,6 +9,7 @@
 #include "Cooldown.hpp"
 #include "Position.hpp"
 #include "Sprite.hpp"
+#include "Gamepad.hpp"
 #include "Registry.hpp"
 #include "raylib.h"
 #include <iostream>
