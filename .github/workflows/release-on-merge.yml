@@ -1,0 +1,47 @@
+name: Release on PR Merge
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  release:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Installer les dépendances
+        run: sudo apt-get update && sudo apt-get install -y cmake g++ make zip
+      - name: Builder tous les jeux et collecter les binaires
+        run: |
+          mkdir -p artifacts/linux
+          for d in $(ls -1 game); do
+            echo "==== Build du jeu: $d ===="
+            make clean
+            make EXEC=$d
+            if [ -f $d ]; then
+              mv $d artifacts/linux/
+            fi
+          done
+      - name: Créer l'archive des binaires Linux
+        run: |
+          cd artifacts
+          zip -r ../artifacts-linux.zip linux
+      - name: Générer un tag automatique
+        id: tagger
+        run: |
+          TAG="v$(date +'%Y.%m.%d-%H%M%S')"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+      - name: Créer la release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tagger.outputs.tag }}
+          name: Release ${{ steps.tagger.outputs.tag }}
+          body: |
+            Release générée automatiquement suite à un merge sur main.
+          files: artifacts-linux.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 

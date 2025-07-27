@@ -1,0 +1,29 @@
+name: Build Windows
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Installer CMake
+        uses: lukka/get-cmake@v3.27.0
+      - name: Build tous les jeux via Makefile
+        shell: bash
+        run: |
+          for d in $(ls -1 game); do
+            echo "==== Build du jeu: $d ===="
+            make clean
+            make EXEC=$d
+            if [ -f $d.exe ]; then
+              echo "Binaire $d.exe généré à la racine."
+            elif [ -f $d ]; then
+              echo "Binaire $d généré à la racine."
+            else
+              echo "Erreur : binaire $d(.exe) non trouvé à la racine !" && exit 1
+            fi
+          done 

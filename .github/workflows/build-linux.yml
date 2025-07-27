@@ -1,0 +1,26 @@
+name: Build Linux
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Installer les dépendances
+        run: sudo apt-get update && sudo apt-get install -y cmake g++ make
+      - name: Build tous les jeux via Makefile
+        run: |
+          for d in $(ls -1 game); do
+            echo "==== Build du jeu: $d ===="
+            make clean
+            make EXEC=$d
+            if [ -f $d ]; then
+              echo "Binaire $d généré à la racine."
+            else
+              echo "Erreur : binaire $d non trouvé à la racine !" && exit 1
+            fi
+          done 
