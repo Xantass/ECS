@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Installer les dépendances
-        run: sudo apt-get update && sudo apt-get install -y cmake g++ make
+        run: sudo apt-get update && sudo apt-get install -y cmake g++ make libx11-dev libxcursor-dev libxrandr-dev libxinerama-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev zip
       - name: Build tous les jeux via Makefile
         run: |
           for d in $(ls -1 game); do
