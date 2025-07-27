@@ -1,0 +1,8 @@
+[
+    { "name": "InputSystem", "components": ["MainPlayer", "Position", "Speed", "Velocity", "Cooldown"] },
+    { "name": "MovementSystem", "components": ["Position", "Velocity"] },
+    { "name": "RenderSystem", "components": ["Position", "Sprite"] },
+    { "name": "CollisionSystem", "components": ["Position", "Collider"] },
+    { "name": "CooldownSystem", "components": ["Cooldown"] },
+    { "name": "GravitySystem", "components": ["Position", "Velocity", "Gravity"] }
+  ]

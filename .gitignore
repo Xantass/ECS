@@ -37,9 +37,11 @@
 *.out
 *.app
 
-# game folders
-rtype
-flappybird
+# game executables
+/rtype
+/flappybird
+!/rtype/
+/!flappybird/
 
 
 # debug information files

@@ -10,7 +10,7 @@ void InputSystem::update(Registry &registry, float /*dt*/)
         // std::cout << "InputSystem: " << entity << std::endl;
         // auto &cooldown = registry.getComponent<Cooldown>(entity);
         auto &vel = registry.getComponent<Velocity>(entity);
-        auto &gamepad = registry.getComponent<Gamepad>(entity);
+        // auto &gamepad = registry.getComponent<Gamepad>(entity);
 
         vel.dx = 0;
         vel.dy = 0;
