@@ -8,7 +8,7 @@ void LifeSystem::update(Registry& registry, float /*dt*/)
         auto& health = registry.getComponent<Health>(entity);
         if (health.health <= 0)
         {
-            registry.getEventBus().emit(DeadEvent(entity));
+            registry.getEventBus().emit(DeadEvent{entity});
         }
     }
 }
