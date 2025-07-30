@@ -35,9 +35,9 @@ protected:
         __VA_ARGS__
 
 // Utilisation :
-// INJECTABLE_MEMBERS( \
-//     InputManager* inputManager = nullptr; \
-//     template<> InputManager*& getMember<InputManager>() { return inputManager; } \
-//     AudioService* audioService = nullptr; \
-//     template<> AudioService*& getMember<AudioService>() { return audioService; } \
+// INJECTABLE_MEMBERS(
+//     InputManager* inputManager = nullptr;
+//     template<> InputManager*& getMember<InputManager>() { return inputManager; }
+//     AudioService* audioService = nullptr;
+//     template<> AudioService*& getMember<AudioService>() { return audioService; }
 // ) 

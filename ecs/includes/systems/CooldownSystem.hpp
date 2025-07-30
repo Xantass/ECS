@@ -11,6 +11,8 @@ public:
 
     INJECTABLE_MEMBERS(
         DeltaTime* deltaTime = nullptr;
-        template<> DeltaTime*& getMember<DeltaTime>() { return deltaTime; }
     )
 };
+
+template<>
+inline DeltaTime*& CooldownSystem::getMember<DeltaTime>() { return deltaTime; }
