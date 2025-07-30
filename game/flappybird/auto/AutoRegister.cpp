@@ -29,10 +29,11 @@ void autoRegister(Registry& registry, Engine& engine) {
     registry.registerComponent<Sprite>();
     registry.registerComponent<Velocity>();
 
-    engine.registerSystem<InputSystem, MainPlayer, Position, Speed, Velocity, Cooldown>();
-    engine.registerSystem<MovementSystem, Position, Velocity>();
-    engine.registerSystem<RenderSystem, Position, Sprite>();
-    engine.registerSystem<CollisionSystem, Position, Collider>();
-    engine.registerSystem<CooldownSystem, Cooldown>();
-    engine.registerSystem<GravitySystem, Position, Velocity, Gravity>();
+    engine.registerSystem<InputSystem>();
+    engine.registerSystem<MovementSystem>();
+    auto& renderSystem = engine.registerSystem<RenderSystem>();
+    engine.setRenderSystem(&renderSystem);
+    engine.registerSystem<CollisionSystem>();
+    engine.registerSystem<CooldownSystem>();
+    engine.registerSystem<GravitySystem>();
 }
