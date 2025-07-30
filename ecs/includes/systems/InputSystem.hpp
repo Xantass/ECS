@@ -10,11 +10,16 @@
 #include "Position.hpp"
 #include "Sprite.hpp"
 #include "Gamepad.hpp"
-#include "Registry.hpp"
 #include "raylib.h"
-#include <iostream>
+#include "EventBus.hpp"
+#include "Injectable.hpp"
 
-class InputSystem : public ISystem {
+class InputSystem : public SystemBase<Velocity, MainPlayer>, public Injectable<EventBus> {
 public:
-    void update(Registry& registry, float dt) override;
+    void OnUpdate() override;
+
+    INJECTABLE_MEMBERS(
+        EventBus* eventBus = nullptr;
+        template<> EventBus*& getMember<EventBus>() { return eventBus; }
+    )
 };

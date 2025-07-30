@@ -1,14 +1,17 @@
 #pragma once
 
 #include "System.hpp"
-#include "Component.hpp"
-#include "Velocity.hpp"
 #include "Position.hpp"
-#include "Registry.hpp"
+#include "Velocity.hpp"
+#include "Injectable.hpp"
+#include "DeltaTime.hpp"
 
-#include "Registry.hpp"
-
-class MovementSystem : public ISystem {
+class MovementSystem : public SystemBase<Position, Velocity>, public Injectable<DeltaTime> {
 public:
-    void update(Registry& registry, float dt) override;
+    void OnUpdate() override;
+
+    INJECTABLE_MEMBERS(
+        DeltaTime* deltaTime = nullptr;
+        template<> DeltaTime*& getMember<DeltaTime>() { return deltaTime; }
+    )
 };

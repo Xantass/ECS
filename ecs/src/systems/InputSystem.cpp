@@ -1,57 +1,33 @@
 #include "InputSystem.hpp"
+#include "Registry.hpp"
 
-#define MAX_GAMEPADS 4
-
-void InputSystem::update(Registry &registry, float /*dt*/)
+void InputSystem::OnUpdate()
 {
-    auto entitiesCopy = entities;
-    for (auto entity : entitiesCopy)
-    {
-        // std::cout << "InputSystem: " << entity << std::endl;
-        // auto &cooldown = registry.getComponent<Cooldown>(entity);
-        auto &vel = registry.getComponent<Velocity>(entity);
-        // auto &gamepad = registry.getComponent<Gamepad>(entity);
+    registry->ForEach<Velocity, MainPlayer>([&](Entity entity, Velocity& vel, MainPlayer& /*player*/) {
         bool isPressed = false;
-
         vel.dx = 0;
         vel.dy = 0;
-        
-        // if (gamepad.id != -1) {
-        //     std::cout << "Gamepad: " << gamepad.id << std::endl;
-        //     if (IsGamepadButtonPressed(gamepad.id, GAMEPAD_BUTTON_RIGHT_FACE_DOWN))
-        //         registry.getEventBus().emit(InputEvent{InputType::KeyRight, entity});
-        //     if (IsGamepadButtonPressed(gamepad.id, GAMEPAD_BUTTON_RIGHT_FACE_UP))
-        //         registry.getEventBus().emit(InputEvent{InputType::KeyLeft, entity});
-        //     if (IsGamepadButtonPressed(gamepad.id, GAMEPAD_BUTTON_RIGHT_FACE_LEFT))
-        //         registry.getEventBus().emit(InputEvent{InputType::KeyDown, entity});
-        //     if (IsGamepadButtonPressed(gamepad.id, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT))
-        //         registry.getEventBus().emit(InputEvent{InputType::KeyUp, entity});
-        //     if (IsGamepadButtonPressed(gamepad.id, GAMEPAD_BUTTON_RIGHT_FACE_DOWN))
-        //         registry.getEventBus().emit(InputEvent{InputType::KeySpace, entity});
-        // }
-
         if (IsKeyDown(KEY_RIGHT)) {
-            registry.getEventBus().emit(InputEvent{InputType::KeyRight, entity});
+            eventBus->emit(InputEvent{InputType::KeyRight, entity});
             isPressed = true;
         }
         if (IsKeyDown(KEY_LEFT)) {
-            registry.getEventBus().emit(InputEvent{InputType::KeyLeft, entity});
+            eventBus->emit(InputEvent{InputType::KeyLeft, entity});
             isPressed = true;
         }
         if (IsKeyDown(KEY_DOWN)) {
-            registry.getEventBus().emit(InputEvent{InputType::KeyDown, entity});
+            eventBus->emit(InputEvent{InputType::KeyDown, entity});
             isPressed = true;
         }
         if (IsKeyDown(KEY_UP)) {
-            registry.getEventBus().emit(InputEvent{InputType::KeyUp, entity});
+            eventBus->emit(InputEvent{InputType::KeyUp, entity});
             isPressed = true;
         }
         if (IsKeyDown(KEY_SPACE)) {
-            registry.getEventBus().emit(InputEvent{InputType::KeySpace, entity});
+            eventBus->emit(InputEvent{InputType::KeySpace, entity});
             isPressed = true;
         }
         if (!isPressed)
-            registry.getEventBus().emit(InputEvent{InputType::KeyNone, entity});
-        
-    }
+            eventBus->emit(InputEvent{InputType::KeyNone, entity});
+    });
 }

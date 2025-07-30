@@ -1,14 +1,11 @@
 #include "LifeSystem.hpp"
+#include "Registry.hpp"
 
-void LifeSystem::update(Registry& registry, float /*dt*/)
+void LifeSystem::OnUpdate()
 {
-    auto entitiesCopy = entities;
-    for (auto entity : entitiesCopy)
-    {
-        auto& health = registry.getComponent<Health>(entity);
-        if (health.health <= 0)
-        {
-            registry.getEventBus().emit(DeadEvent{entity});
+    registry->ForEach<Health>([&](Entity entity, Health& health) {
+        if (health.health <= 0) {
+            eventBus->emit(DeadEvent{entity});
         }
-    }
+    });
 }

@@ -1,15 +1,11 @@
 #include "GravitySystem.hpp"
+#include "Registry.hpp"
+#include "components/Time.hpp"
 
-void GravitySystem::update(Registry &registry, float dt)
+void GravitySystem::OnUpdate()
 {
-    // std::cout << "GravitySystem: " << entities.size() << std::endl;
-    auto entitiesCopy = entities;
-    for (auto entity : entitiesCopy)
-    {
-        auto &vel = registry.getComponent<Velocity>(entity);
-        auto &gravity = registry.getComponent<Gravity>(entity);
-
-        vel.dy += gravity.gravity * dt;
-        // std::cout << "vel.dy: " << vel.dy << std::endl;
-    }
+    // std::cout << "GravitySystem" << std::endl;
+    registry->ForEach<Velocity, Gravity>([&](Entity /*entity*/, Velocity& vel, Gravity& gravity) {
+        vel.dy += gravity.gravity * registry->getSingleton<DeltaTime>().deltaTime;
+    });
 }

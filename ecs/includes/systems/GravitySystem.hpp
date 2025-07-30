@@ -1,13 +1,17 @@
 #pragma once
 
 #include "System.hpp"
-#include "Position.hpp"
 #include "Velocity.hpp"
 #include "Gravity.hpp"
-#include "Registry.hpp"
-#include "raylib.h"
+#include "Injectable.hpp"
+#include "DeltaTime.hpp"
 
-class GravitySystem : public ISystem {
+class GravitySystem : public SystemBase<Velocity, Gravity>, public Injectable<DeltaTime> {
 public:
-    void update(Registry& registry, float dt) override;
+    void OnUpdate() override;
+
+    INJECTABLE_MEMBERS(
+        DeltaTime* deltaTime = nullptr;
+        template<> DeltaTime*& getMember<DeltaTime>() { return deltaTime; }
+    )
 };

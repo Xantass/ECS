@@ -18,6 +18,7 @@ target_include_directories(ecs
         includes/components
         includes/events
         includes/systems
+        includes/data
 )
 
 target_link_libraries(ecs PUBLIC raylib nlohmann_json::nlohmann_json)

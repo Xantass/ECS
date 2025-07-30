@@ -1,6 +1,5 @@
 #pragma once
 
-struct Time
-{
+struct Time {
     float time;
 };

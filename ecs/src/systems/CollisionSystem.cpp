@@ -1,44 +1,35 @@
 #include "CollisionSystem.hpp"
+#include "Registry.hpp"
 
-void CollisionSystem::update(Registry &registry, float /*dt*/)
+void CollisionSystem::OnUpdate()
 {
+    // std::cout << "CollisionSystem" << std::endl;
     const int cellSize = 64;
     using CellKey = std::pair<int, int>;
     std::unordered_map<CellKey, std::vector<Entity>, pair_hash> spatialGrid;
 
-    auto hash = [&](float x, float y) -> CellKey
-    {
+    auto hash = [&](float x, float y) -> CellKey {
         return {static_cast<int>(x) / cellSize, static_cast<int>(y) / cellSize};
     };
 
-    for (Entity e : entities)
-    {
-        if (!registry.hasComponent<Position>(e) || !registry.hasComponent<Collider>(e))
-            continue;
-        auto &pos = registry.getComponent<Position>(e);
+    registry->ForEach<Position, Collider>([&](Entity e, Position& pos, Collider&) {
         CellKey key = hash(pos.x, pos.y);
         spatialGrid[key].push_back(e);
-    }
+    });
 
-    for (const auto &[key, cellEntities] : spatialGrid)
-    {
-        for (Entity a : cellEntities)
-        {
-            if (!registry.hasComponent<Bullet>(a))
+    for (const auto &[key, cellEntities] : spatialGrid) {
+        for (Entity a : cellEntities) {
+            if (!registry->hasComponent<Bullet>(a))
                 continue;
-            auto &aPos = registry.getComponent<Position>(a);
-            auto &aCol = registry.getComponent<Collider>(a);
-
-            for (Entity b : cellEntities)
-            {
-                if (!registry.hasComponent<Enemy>(b) || a == b)
+            auto &aPos = registry->getComponent<Position>(a);
+            auto &aCol = registry->getComponent<Collider>(a);
+            for (Entity b : cellEntities) {
+                if (!registry->hasComponent<Enemy>(b) || a == b)
                     continue;
-                auto &bPos = registry.getComponent<Position>(b);
-                auto &bCol = registry.getComponent<Collider>(b);
-
-                if (checkAABBCollision(aPos, aCol, bPos, bCol))
-                {
-                    registry.getEventBus().emit(CollisionEvent{a, b});
+                auto &bPos = registry->getComponent<Position>(b);
+                auto &bCol = registry->getComponent<Collider>(b);
+                if (checkAABBCollision(aPos, aCol, bPos, bCol)) {
+                    registry->getEventBus().emit(CollisionEvent{a, b});
                     break;
                 }
             }

@@ -1,13 +1,6 @@
 #include "UiSystem.hpp"
 
-void UiSystem::update(Registry& registry, float dt)
+void UiSystem::OnUpdate()
 {
-    auto entitiesCopy = entities;
-    for (auto entity : entitiesCopy)
-    {
-        // auto &pos = registry.getComponent<Position>(entity);
-        // auto &vel = registry.getComponent<Velocity>(entity);
-        // pos.x += vel.dx * dt;
-        // pos.y += vel.dy * dt;
-    }
+    // Implémentation à compléter selon les besoins de l'UI
 }

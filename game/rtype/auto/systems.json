@@ -1,11 +1,11 @@
 [
-    { "name": "InputSystem", "components": ["Gamepad", "Position", "Speed", "Velocity", "Cooldown"] },
-    { "name": "MovementSystem", "components": ["Position", "Velocity"] },
-    { "name": "RenderSystem", "components": ["Position", "Sprite"] },
-    { "name": "BulletSystem", "components": ["Position", "Bullet"] },
-    { "name": "CollisionSystem", "components": ["Position", "Collider"] },
-    { "name": "CooldownSystem", "components": ["Cooldown"] },
-    { "name": "GravitySystem", "components": ["Position", "Velocity", "Gravity"] },
-    { "name": "LifeSystem", "components": ["Health"] },
-    { "name": "TimeSystem", "components": ["Time"] }
+    { "name": "InputSystem" },
+    { "name": "MovementSystem" },
+    { "name": "RenderSystem" },
+    { "name": "BulletSystem" },
+    { "name": "CollisionSystem" },
+    { "name": "CooldownSystem" },
+    { "name": "GravitySystem" },
+    { "name": "LifeSystem" },
+    { "name": "TimeSystem" }
   ]

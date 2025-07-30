@@ -1,16 +1,13 @@
 #include "TimeSystem.hpp"
-#include "DeadEvent.hpp"
+#include "Registry.hpp"
+#include "components/Time.hpp"
 
-void TimeSystem::update(Registry& registry, float dt)
+void TimeSystem::OnUpdate()
 {
-    auto entitiesCopy = entities;
-    for (auto entity : entitiesCopy)
-    {
-        auto &time = registry.getComponent<Time>(entity);
-        time.time -= dt;
-        if (time.time <= 0)
-        {
-            registry.getEventBus().emit(DeadEvent{entity});
+    registry->ForEach<Time>([&](Entity entity, Time& time) {
+        time.time -= registry->getSingleton<DeltaTime>().deltaTime;
+        if (time.time <= 0) {
+            registry->getEventBus().emit(DeadEvent{entity});
         }
-    }
+    });
 }

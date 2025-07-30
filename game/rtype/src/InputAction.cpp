@@ -52,12 +52,13 @@ void setupActions(Registry &registry, Entity playerId)
     };
     actions[InputType::KeySpace] = [&registry, playerId]()
     {   
-        std::cout << "KeySpace" << std::endl;
+        // std::cout << "KeySpace" << std::endl;
         auto &pos = registry.getComponent<Position>(playerId);
         auto &cooldown = registry.getComponent<Cooldown>(playerId);
 
         if (cooldown.timer < cooldown.interval) return;
         auto bullet = registry.createEntity();
+        std::cout << "Bullet created: " << bullet << std::endl;
         cooldown.timer = 0.0f;
         registry.addComponent(bullet, Time{2.0f});
         registry.addComponent(bullet, Position{pos.x + static_cast<float>(registry.getAssetManager().getFrame("rocket").width) / 2, pos.y + static_cast<float>(registry.getAssetManager().getFrame("rocket").height) / 2});

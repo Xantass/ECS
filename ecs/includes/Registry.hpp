@@ -15,6 +15,10 @@
 #include <typeindex>
 #include <set>
 #include <iostream>
+#include <tuple>
+#include <vector>
+#include <type_traits>
+#include <any>
 
 class IComponentArray
 {
@@ -89,10 +93,7 @@ public:
     Registry();
     Entity createEntity();
     void destroyEntity(Entity entity);
-    Signature getSignature(Entity entity);
-    void updateEntitySystems(Entity entity, Signature entitySignature);
-    std::unordered_map<std::string, std::shared_ptr<ISystem>> &getAllSystems(void);
-    std::shared_ptr<ISystem> getSystemByType(const std::string &name);
+    // Je retire les includes et membres liés à ISystem et signatures manuelles
     std::queue<Entity> &getAvailableEntities();
     AssetManager& getAssetManager();
     EventBus& getEventBus();
@@ -113,7 +114,6 @@ public:
     {
         getComponentArray<T>()->insertData(entity, component);
         entitySignatures[entity].set(getComponentType<T>(), true);
-        updateEntitySystems(entity, entitySignatures[entity]);
     }
 
     template <typename T>
@@ -121,7 +121,6 @@ public:
     {
         getComponentArray<T>()->removeData(entity);
         entitySignatures[entity].set(getComponentType<T>(), false);
-        updateEntitySystems(entity, entitySignatures[entity]);
     }
 
     template <typename T>
@@ -146,30 +145,44 @@ public:
     }
 
     template <typename T>
-    std::shared_ptr<T> registerSystem()
-    {
-        const char *typeName = typeid(T).name();
-        assert(systems.find(typeName) == systems.end() && "System already registered");
-
-        auto system = std::make_shared<T>();
-        systems[typeName] = system;
-        return system;
-    }
-
-    template <typename T>
-    void setSystemSignature(Signature signature)
-    {
-        const char *typeName = typeid(T).name();
-        assert(systems.find(typeName) != systems.end() && "System not registered");
-        systemSignatures[typeName] = signature;
-    }
-
-    template <typename T>
     std::shared_ptr<ComponentArray<T>> getComponentArray()
     {
         const char *typeName = typeid(T).name();
         assert(componentTypes.find(typeName) != componentTypes.end() && "Component not registered");
         return std::static_pointer_cast<ComponentArray<T>>(componentArrays[typeName]);
+    }
+
+    // Nouvelle API ForEach pour queries ergonomiques
+    template<typename... Components, typename Func>
+    void ForEach(Func func) {
+        for (Entity entity = 0; entity < MAX_ENTITIES; ++entity) {
+            if (((hasComponent<Components>(entity)) && ...)) {
+                func(entity, getComponent<Components>(entity)...);
+            }
+        }
+    }
+
+    // Gestion des singletons
+    template<typename T>
+    void setSingleton(const T& data) {
+        singletons[typeid(T).hash_code()] = data;
+    }
+    template<typename T>
+    T& getSingleton() {
+        return std::any_cast<T&>(singletons.at(typeid(T).hash_code()));
+    }
+
+    // Gestion des ressources partagées (injection avancée)
+    template<typename T>
+    void setResource(std::shared_ptr<T> res) {
+        resources[typeid(T)] = res;
+    }
+    template<typename T>
+    T& getResource() {
+        auto it = resources.find(typeid(T));
+        if (it == resources.end())
+            throw std::runtime_error("Resource not found");
+        return *std::static_pointer_cast<T>(it->second);
     }
 
 private:
@@ -178,9 +191,10 @@ private:
     std::unordered_map<std::string, ComponentType> componentTypes{};
     std::unordered_map<std::string, std::shared_ptr<IComponentArray>> componentArrays{};
     std::unordered_map<std::string, Signature> systemSignatures{};
-    std::unordered_map<std::string, std::shared_ptr<ISystem>> systems{};
     ComponentType nextComponentType = 0;
     std::uint32_t livingEntityCount = 0;
     AssetManager assetManager;
     EventBus eventBus;
+    std::unordered_map<size_t, std::any> singletons;
+    std::unordered_map<std::type_index, std::shared_ptr<void>> resources;
 };

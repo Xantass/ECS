@@ -22,6 +22,7 @@ int main() {
 
     // Créer les entités
     Entity player = registry.createEntity();
+    registry.addComponent(player, MainPlayer{});
     registry.addComponent(player, Position{100, 100});
     registry.addComponent(player, Velocity{0, 0});
     registry.addComponent(player, Sprite{registry.getAssetManager().getTexture("Ships"), registry.getAssetManager().getFrame("silver_ship")});
