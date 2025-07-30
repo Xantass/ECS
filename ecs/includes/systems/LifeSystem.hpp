@@ -12,6 +12,8 @@ public:
 
     INJECTABLE_MEMBERS(
         EventBus* eventBus = nullptr;
-        template<> EventBus*& getMember<EventBus>() { return eventBus; }
     )
 };
+
+template<>
+inline EventBus*& LifeSystem::getMember<EventBus>() { return eventBus; }
