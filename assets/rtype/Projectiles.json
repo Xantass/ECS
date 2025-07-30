@@ -1,0 +1,5 @@
+{
+  "frames": {
+    "rocket": { "frame": { "x": 40, "y": 24, "w": 8, "h": 8 }, "rotated": 90 }
+  }
+}

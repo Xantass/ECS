@@ -1,0 +1,65 @@
+{ "frames": {
+   "SpaceShooterAssetPack_BackGrounds 0.png": {
+    "frame": { "x": 0, "y": 0, "w": 128, "h": 254 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 254 },
+    "sourceSize": { "w": 128, "h": 254 },
+    "duration": 100
+   },
+   "SpaceShooterAssetPack_BackGrounds 1.png": {
+    "frame": { "x": 128, "y": 0, "w": 128, "h": 254 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 254 },
+    "sourceSize": { "w": 128, "h": 254 },
+    "duration": 100
+   },
+   "SpaceShooterAssetPack_BackGrounds 2.png": {
+    "frame": { "x": 256, "y": 0, "w": 128, "h": 254 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 254 },
+    "sourceSize": { "w": 128, "h": 254 },
+    "duration": 100
+   },
+   "SpaceShooterAssetPack_BackGrounds 3.png": {
+    "frame": { "x": 384, "y": 0, "w": 128, "h": 254 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 254 },
+    "sourceSize": { "w": 128, "h": 254 },
+    "duration": 100
+   },
+   "SpaceShooterAssetPack_BackGrounds 4.png": {
+    "frame": { "x": 512, "y": 0, "w": 128, "h": 254 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 254 },
+    "sourceSize": { "w": 128, "h": 254 },
+    "duration": 100
+   },
+   "SpaceShooterAssetPack_BackGrounds 5.png": {
+    "frame": { "x": 640, "y": 0, "w": 128, "h": 254 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 254 },
+    "sourceSize": { "w": 128, "h": 254 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3.14.4-arm64-trial",
+  "format": "RGBA8888",
+  "size": { "w": 768, "h": 254 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "Sprite Sheet", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

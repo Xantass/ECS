@@ -10,7 +10,7 @@
 
 class Engine {
 public:
-    Engine(int width, int height, const char* title);
+    Engine(int width, int height, const char* title, std::string pathAssets);
     ~Engine();
 
     void run();
@@ -36,7 +36,7 @@ private:
 
     Registry registry;
 
-    void init();
+    void init(std::string pathAssets);
     void shutdown();
     void update(float dt);
     void render();

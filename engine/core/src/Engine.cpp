@@ -4,21 +4,21 @@
 
 void autoRegister(Registry& registry, Engine& engine);
 
-Engine::Engine(int width, int height, const char* title)
+Engine::Engine(int width, int height, const char* title, std::string pathAssets)
     : screenWidth(width), screenHeight(height), windowTitle(title) {
-    init();
+    init(pathAssets);
 }
 
 Engine::~Engine() {
     shutdown();
 }
 
-void Engine::init() {
+void Engine::init(std::string pathAssets) {
     InitWindow(screenWidth, screenHeight, windowTitle);
     ToggleFullscreen();
     SetTargetFPS(60);
     autoRegister(registry, *this);
-    registry.getAssetManager().loadAllAssets("assets/");
+    registry.getAssetManager().loadAllAssets(pathAssets);
 }
 
 void Engine::shutdown() {

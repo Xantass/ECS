@@ -6,5 +6,6 @@
     { "name": "CollisionSystem", "components": ["Position", "Collider"] },
     { "name": "CooldownSystem", "components": ["Cooldown"] },
     { "name": "GravitySystem", "components": ["Position", "Velocity", "Gravity"] },
-    { "name": "LifeSystem", "components": ["Health"] }
+    { "name": "LifeSystem", "components": ["Health"] },
+    { "name": "TimeSystem", "components": ["Time"] }
   ]

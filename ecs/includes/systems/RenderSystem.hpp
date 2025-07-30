@@ -9,6 +9,8 @@
 
 #include <iostream>
 
+#define SCALE 4.0f
+
 class RenderSystem : public ISystem {
 public:
     void update(Registry& registry, float dt) override;

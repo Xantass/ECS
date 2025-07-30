@@ -10,6 +10,7 @@
 #include "Position.hpp"
 #include "Speed.hpp"
 #include "Sprite.hpp"
+#include "Time.hpp"
 #include "Velocity.hpp"
 #include "InputSystem.hpp"
 #include "MovementSystem.hpp"
@@ -19,6 +20,7 @@
 #include "CooldownSystem.hpp"
 #include "GravitySystem.hpp"
 #include "LifeSystem.hpp"
+#include "TimeSystem.hpp"
 
 void autoRegister(Registry& registry, Engine& engine) {
     registry.registerComponent<Bullet>();
@@ -31,6 +33,7 @@ void autoRegister(Registry& registry, Engine& engine) {
     registry.registerComponent<Position>();
     registry.registerComponent<Speed>();
     registry.registerComponent<Sprite>();
+    registry.registerComponent<Time>();
     registry.registerComponent<Velocity>();
 
     engine.registerSystem<InputSystem, Gamepad, Position, Speed, Velocity, Cooldown>();
@@ -41,4 +44,5 @@ void autoRegister(Registry& registry, Engine& engine) {
     engine.registerSystem<CooldownSystem, Cooldown>();
     engine.registerSystem<GravitySystem, Position, Velocity, Gravity>();
     engine.registerSystem<LifeSystem, Health>();
+    engine.registerSystem<TimeSystem, Time>();
 }
