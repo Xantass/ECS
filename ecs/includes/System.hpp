@@ -1,13 +1,26 @@
 #pragma once
 
 #include "Entity.hpp"
-#include <set>
+#include <tuple>
+#include <functional>
+#include <vector>
+#include <type_traits>
 
 class Registry;
 
-class ISystem {
+// Nouvelle base système template
+// Permet la détection automatique des composants et l'API ForEach
+
+template<typename... Components>
+class SystemBase {
 public:
-    virtual ~ISystem() = default;
-    virtual void update(Registry& registry, float dt) = 0;
-    std::set<Entity> entities;
+    virtual ~SystemBase() = default;
+    // Méthode à surcharger dans les systèmes
+    virtual void OnUpdate() = 0;
+
+    void setRegistry(Registry* reg) { registry = reg; }
+protected:
+    Registry* registry = nullptr;
+    // API ergonomique pour itérer sur les entités ayant les bons composants
+    void ForEach(std::function<void(Entity, Components&...)> func);
 };

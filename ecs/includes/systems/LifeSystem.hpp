@@ -1,10 +1,19 @@
 #pragma once
 
-#include "Registry.hpp"
-#include "DeadEvent.hpp"
 #include "Health.hpp"
+#include "DeadEvent.hpp"
+#include "System.hpp"
+#include "EventBus.hpp"
+#include "Injectable.hpp"
 
-class LifeSystem : public ISystem {
-    public:
-        void update(Registry& registry, float dt) override;
+class LifeSystem : public SystemBase<Health>, public Injectable<EventBus> {
+public:
+    void OnUpdate() override;
+
+    INJECTABLE_MEMBERS(
+        EventBus* eventBus = nullptr;
+    )
 };
+
+template<>
+inline EventBus*& LifeSystem::getMember<EventBus>() { return eventBus; }

@@ -8,8 +8,6 @@ with open('systems.json') as f:
 
 all_systems = [s['name'] for s in systems]
 all_components = set(components)
-for s in systems:
-    all_components.update(s['components'])
 
 with open('AutoRegister.cpp', 'w') as f:
     f.write('#include "Registry.hpp"\n')
@@ -23,6 +21,12 @@ with open('AutoRegister.cpp', 'w') as f:
         f.write(f'    registry.registerComponent<{c}>();\n')
     f.write('\n')
     for s in systems:
-        str = f"    engine.registerSystem<{s['name']}, "+ ', '.join(s['components']) + '>();\n'
-        f.write(str)
+        if s['name'] == 'RenderSystem':
+            str = f"    auto& renderSystem = engine.registerSystem<{s['name']}>();\n"
+            f.write(str)
+            str = f"    engine.setRenderSystem(&renderSystem);\n"
+            f.write(str)
+        else:
+            str = f"    engine.registerSystem<{s['name']}>();\n"
+            f.write(str)
     f.write('}\n')

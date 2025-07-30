@@ -9,3 +9,5 @@ Cooldown
 Gravity
 Health
 Gamepad
+Time
+MainPlayer

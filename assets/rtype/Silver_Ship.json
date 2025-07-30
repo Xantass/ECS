@@ -1,0 +1,7 @@
+{
+  "frames": {
+    "silver_ship_up": { "frame": { "x": 0, "y": 0, "w": 8, "h": 8 }, "rotated": 90 },
+    "silver_ship": { "frame": { "x": 8, "y": 0, "w": 8, "h": 8 }, "rotated": 90 },
+    "silver_ship_down": { "frame": { "x": 16, "y": 0, "w": 8, "h": 8 }, "rotated": 90 }
+  }
+}

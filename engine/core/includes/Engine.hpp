@@ -7,24 +7,30 @@
 #include <unordered_map>
 #include <typeindex>
 #include <iostream>
+#include <vector>
+#include "Injectable.hpp"
+#include "RenderSystem.hpp"
 
 class Engine {
 public:
-    Engine(int width, int height, const char* title);
+    Engine(int width, int height, const char* title, std::string pathAssets);
     ~Engine();
 
     void run();
 
     Registry& getRegistry();
 
-    template<typename T, typename... Components>
+    template<typename T>
     T& registerSystem() {
-        auto system = registry.registerSystem<T>();
-        Signature sig;
-        (sig.set(registry.getComponentType<Components>()), ...);
-        registry.setSystemSignature<T>(sig);
+        auto system = std::make_shared<T>();
+        system->setRegistry(&registry);
+        injectIfNeeded(*system);
+        systems.push_back(system);
         return *system;
     }
+    void updateAllSystems();
+    void setRenderSystem(RenderSystem* sys) { renderSystem = sys; }
+    void renderFrame();
 
 private:
     int screenWidth;
@@ -35,10 +41,19 @@ private:
     float timeAccumulator = 0.0f;
 
     Registry registry;
+    std::vector<std::shared_ptr<void>> systems;
+    RenderSystem* renderSystem = nullptr;
 
-    void init();
+    void init(std::string pathAssets);
     void shutdown();
     void update(float dt);
     void render();
+
+    template<typename T>
+    void injectIfNeeded(T&) {}
+    template<typename T, typename... Resources>
+    void injectIfNeeded(Injectable<Resources...>& sys) {
+        sys.inject(registry.getResource<Resources>()...);
+    }
 };
 

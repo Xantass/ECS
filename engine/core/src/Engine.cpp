@@ -1,24 +1,27 @@
 #include "Engine.hpp"
 #include "raylib.h"
 #include <iostream>
+#include "DeltaTime.hpp"
+#include "Registry.hpp"
+#include "System.hpp"
 
 void autoRegister(Registry& registry, Engine& engine);
 
-Engine::Engine(int width, int height, const char* title)
+Engine::Engine(int width, int height, const char* title, std::string pathAssets)
     : screenWidth(width), screenHeight(height), windowTitle(title) {
-    init();
+    init(pathAssets);
 }
 
 Engine::~Engine() {
     shutdown();
 }
 
-void Engine::init() {
+void Engine::init(std::string pathAssets) {
     InitWindow(screenWidth, screenHeight, windowTitle);
     ToggleFullscreen();
     SetTargetFPS(60);
     autoRegister(registry, *this);
-    registry.getAssetManager().loadAllAssets("assets/");
+    registry.getAssetManager().loadAllAssets(pathAssets);
 }
 
 void Engine::shutdown() {
@@ -51,19 +54,27 @@ void Engine::run() {
 }
 
 void Engine::update(float dt) {
-    for (auto& [name, sys] : registry.getAllSystems()) {
-        // std::cout << "System: " << name << std::endl;
-        sys->update(registry, dt);
+    registry.setSingleton<DeltaTime>({dt});
+    updateAllSystems();
+}
+
+void Engine::updateAllSystems() {
+    for (auto& sys : systems) {
+        // On suppose que tous les systèmes héritent de SystemBase<...>
+        auto* base = static_cast<SystemBase<>*>(sys.get());
+        if (base) base->OnUpdate();
+    }
+}
+
+void Engine::renderFrame() {
+    if (renderSystem) {
+        renderSystem->OnUpdate();
     }
 }
 
 void Engine::render() {
     BeginDrawing();
     ClearBackground(BLACK);
-
-    auto renderSys = registry.getSystemByType("RenderSystem");
-    if (renderSys)
-        renderSys->update(registry, 0.0f);
-
+    renderFrame();
     EndDrawing();
 }

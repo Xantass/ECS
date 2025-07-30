@@ -5,13 +5,12 @@
 #include "Bullet.hpp"
 #include "Enemy.hpp"
 #include "Position.hpp"
-#include "Registry.hpp"
 #include "raylib.h"
 #include "CollisionEvent.hpp"
 
-class CollisionSystem : public ISystem {
+class CollisionSystem : public SystemBase<Position, Collider> {
 public:
-    void update(Registry& registry, float dt) override;
+    void OnUpdate() override;
 
 private:
     struct pair_hash {

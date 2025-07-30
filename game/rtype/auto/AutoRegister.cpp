@@ -7,9 +7,11 @@
 #include "Gamepad.hpp"
 #include "Gravity.hpp"
 #include "Health.hpp"
+#include "MainPlayer.hpp"
 #include "Position.hpp"
 #include "Speed.hpp"
 #include "Sprite.hpp"
+#include "Time.hpp"
 #include "Velocity.hpp"
 #include "InputSystem.hpp"
 #include "MovementSystem.hpp"
@@ -19,6 +21,7 @@
 #include "CooldownSystem.hpp"
 #include "GravitySystem.hpp"
 #include "LifeSystem.hpp"
+#include "TimeSystem.hpp"
 
 void autoRegister(Registry& registry, Engine& engine) {
     registry.registerComponent<Bullet>();
@@ -28,17 +31,21 @@ void autoRegister(Registry& registry, Engine& engine) {
     registry.registerComponent<Gamepad>();
     registry.registerComponent<Gravity>();
     registry.registerComponent<Health>();
+    registry.registerComponent<MainPlayer>();
     registry.registerComponent<Position>();
     registry.registerComponent<Speed>();
     registry.registerComponent<Sprite>();
+    registry.registerComponent<Time>();
     registry.registerComponent<Velocity>();
 
-    engine.registerSystem<InputSystem, Gamepad, Position, Speed, Velocity, Cooldown>();
-    engine.registerSystem<MovementSystem, Position, Velocity>();
-    engine.registerSystem<RenderSystem, Position, Sprite>();
-    engine.registerSystem<BulletSystem, Position, Bullet>();
-    engine.registerSystem<CollisionSystem, Position, Collider>();
-    engine.registerSystem<CooldownSystem, Cooldown>();
-    engine.registerSystem<GravitySystem, Position, Velocity, Gravity>();
-    engine.registerSystem<LifeSystem, Health>();
+    engine.registerSystem<InputSystem>();
+    engine.registerSystem<MovementSystem>();
+    auto& renderSystem = engine.registerSystem<RenderSystem>();
+    engine.setRenderSystem(&renderSystem);
+    engine.registerSystem<BulletSystem>();
+    engine.registerSystem<CollisionSystem>();
+    engine.registerSystem<CooldownSystem>();
+    engine.registerSystem<GravitySystem>();
+    engine.registerSystem<LifeSystem>();
+    engine.registerSystem<TimeSystem>();
 }

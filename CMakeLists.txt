@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.5)
 project(RTypeEngine)
 
 # Politique pour compatibilité avec projets CMake anciens (ex: Raylib 4.5.0)
-cmake_policy(VERSION 3.16)
+# cmake_policy(VERSION 3.5)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -16,6 +16,14 @@ CPMAddPackage(
   GITHUB_REPOSITORY raysan5/raylib
   GIT_TAG 5.5         # ou GIT_TAG 4.5.0 si rétrocompatibilité + cmake_policy
   OPTIONS "BUILD_EXAMPLES OFF" "BUILD_GAMES OFF"
+)
+
+# === JSON ===
+CPMAddPackage(
+    NAME nlohmann_json
+    GITHUB_REPOSITORY nlohmann/json
+    GIT_TAG v3.12.0
+    OPTIONS "JSON_BuildTests OFF"
 )
 
 # Active les warnings utiles

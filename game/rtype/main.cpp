@@ -16,17 +16,18 @@
 void setupReaction(Registry& registry);
 
 int main() {
-    Engine engine(1920, 1080, "R-Type Engine");
+    Engine engine(1920, 1080, "R-Type Engine", "assets/rtype/");
 
     Registry& registry = engine.getRegistry();    
 
     // Créer les entités
     Entity player = registry.createEntity();
+    registry.addComponent(player, MainPlayer{});
     registry.addComponent(player, Position{100, 100});
     registry.addComponent(player, Velocity{0, 0});
-    registry.addComponent(player, Sprite{registry.getAssetManager().getTexture("player"), 1.0f});
+    registry.addComponent(player, Sprite{registry.getAssetManager().getTexture("Ships"), registry.getAssetManager().getFrame("silver_ship")});
     registry.addComponent(player, Speed{300});
-    registry.addComponent(player, Collider{static_cast<float>(registry.getAssetManager().getTexture("player").width), static_cast<float>(registry.getAssetManager().getTexture("player").height)});
+    registry.addComponent(player, Collider{static_cast<float>(registry.getAssetManager().getFrame("silver_ship").width), static_cast<float>(registry.getAssetManager().getFrame("silver_ship").height)});
     registry.addComponent(player, Cooldown{0.0f, 0.2f});
     registry.addComponent(player, Health{100, 100});
     if (IsGamepadAvailable(0))
@@ -40,9 +41,9 @@ int main() {
     Entity enemy = registry.createEntity();
     registry.addComponent(enemy, Position{900, 100});
     registry.addComponent(enemy, Velocity{0, 0});
-    registry.addComponent(enemy, Sprite{registry.getAssetManager().getTexture("enemy"), 1.0f});
+    registry.addComponent(enemy, Sprite{registry.getAssetManager().getTexture("Ships"), registry.getAssetManager().getFrame("enemy_purple")});
     registry.addComponent(enemy, Enemy{});
-    registry.addComponent(enemy, Collider{static_cast<float>(registry.getAssetManager().getTexture("enemy").width), static_cast<float>(registry.getAssetManager().getTexture("enemy").height)});
+    registry.addComponent(enemy, Collider{static_cast<float>(registry.getAssetManager().getFrame("enemy_purple").width), static_cast<float>(registry.getAssetManager().getFrame("enemy_purple").height)});
     // registry.addComponent(enemy, Gravity{100});
     registry.addComponent(enemy, Health{100, 100});
 

@@ -1,0 +1,10 @@
+{ 
+  "frames": {
+   "enemy_purple": { "frame": { "x": 32, "y": 48, "w": 16, "h": 16 }, "rotated": 90 },
+   "enemy_yellow": { "frame": { "x": 48, "y": 48, "w": 16, "h": 16 }, "rotated": 90 },
+   "enemy_green": { "frame": { "x": 64, "y": 48, "w": 16, "h": 16 }, "rotated": -90 },
+   "enemy_white": { "frame": { "x": 32, "y": 64, "w": 16, "h": 16 }, "rotated": -90 },
+   "enemy_multi": { "frame": { "x": 48, "y": 64, "w": 16, "h": 16 }, "rotated": -90 },
+   "enemy_orange": { "frame": { "x": 64, "y": 64, "w": 16, "h": 16 }, "rotated": -90 }
+ }
+}

@@ -2,9 +2,17 @@
 
 #include "System.hpp"
 #include "Cooldown.hpp"
-#include "Registry.hpp"
+#include "DeltaTime.hpp"
+#include "Injectable.hpp"
 
-class CooldownSystem : public ISystem {
+class CooldownSystem : public SystemBase<Cooldown>, public Injectable<DeltaTime> {
 public:
-    void update(Registry& registry, float dt) override;
+    void OnUpdate() override;
+
+    INJECTABLE_MEMBERS(
+        DeltaTime* deltaTime = nullptr;
+    )
 };
+
+template<>
+inline DeltaTime*& CooldownSystem::getMember<DeltaTime>() { return deltaTime; }

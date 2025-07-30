@@ -7,6 +7,7 @@ set(SRC
     src/systems/MovementSystem.cpp
     src/systems/RenderSystem.cpp
     src/systems/LifeSystem.cpp
+    src/systems/TimeSystem.cpp
 )
 
 add_library(ecs ${SRC})
@@ -17,7 +18,8 @@ target_include_directories(ecs
         includes/components
         includes/events
         includes/systems
+        includes/data
 )
 
-target_link_libraries(ecs PUBLIC raylib)
+target_link_libraries(ecs PUBLIC raylib nlohmann_json::nlohmann_json)
 

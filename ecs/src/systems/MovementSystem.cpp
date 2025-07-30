@@ -1,14 +1,15 @@
 #include "MovementSystem.hpp"
+#include "Registry.hpp"
 
-void MovementSystem::update(Registry &registry, float dt)
+void MovementSystem::OnUpdate()
 {
-    auto entitiesCopy = entities;
-    for (auto entity : entitiesCopy)
-    {
-        // std::cout << "MovementSystem: " << entity << std::endl;
-        auto &pos = registry.getComponent<Position>(entity);
-        auto &vel = registry.getComponent<Velocity>(entity);
-        pos.x += vel.dx * dt;
-        pos.y += vel.dy * dt;
-    }
+    registry->ForEach<Position, Velocity>([&](Entity /*entity*/, Position& pos, Velocity& vel) {
+        // std::cout << "MovementSystem entity: " << entity << std::endl;
+        // std::cout << "Entity pos.x before: " << pos.x << std::endl;
+        // std::cout << "Entity pos.y before: " << pos.y << std::endl;
+        pos.x += vel.dx * registry->getSingleton<DeltaTime>().deltaTime;
+        pos.y += vel.dy * registry->getSingleton<DeltaTime>().deltaTime;
+        // std::cout << "Entity pos.x after: " << pos.x << std::endl;
+        // std::cout << "Entity pos.y after: " << pos.y << std::endl;
+    });
 }

@@ -1,12 +1,9 @@
 #include "CooldownSystem.hpp"
+#include "Registry.hpp"
 
-void CooldownSystem::update(Registry &registry, float dt)
+void CooldownSystem::OnUpdate()
 {
-    // std::cout << "CooldownSystem: " << entities.size() << std::endl;
-    auto entitiesCopy = entities;
-    for (auto entity : entitiesCopy)
-    {
-        auto &cooldown = registry.getComponent<Cooldown>(entity);
-        cooldown.timer += dt;
-    }
+    registry->ForEach<Cooldown>([&](Entity /*entity*/, Cooldown& cooldown) {
+        cooldown.timer += registry->getSingleton<DeltaTime>().deltaTime;
+    });
 }

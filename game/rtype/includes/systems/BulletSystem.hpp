@@ -2,12 +2,19 @@
 
 #include "System.hpp"
 #include "Position.hpp"
-#include "Velocity.hpp"
 #include "Bullet.hpp"
-#include "Registry.hpp"
 #include "raylib.h"
+#include "EventBus.hpp"
+#include "Injectable.hpp"
 
-class BulletSystem : public ISystem {
+class BulletSystem : public SystemBase<Position, Bullet>, public Injectable<EventBus> {
 public:
-    void update(Registry& registry, float dt) override;
+    void OnUpdate() override;
+
+    INJECTABLE_MEMBERS(
+        EventBus* eventBus = nullptr;
+    )
 };
+
+template<>
+inline EventBus*& BulletSystem::getMember<EventBus>() { return eventBus; }
