@@ -4,8 +4,8 @@
 
 void GravitySystem::OnUpdate()
 {
-    // std::cout << "GravitySystem" << std::endl;
+    auto& dt = registry->getSingleton<DeltaTime>();
     registry->ForEach<Velocity, Gravity>([&](Entity /*entity*/, Velocity& vel, Gravity& gravity) {
-        vel.dy += gravity.gravity * registry->getSingleton<DeltaTime>().deltaTime;
+        vel.dy += gravity.gravity * dt.deltaTime;
     });
 }

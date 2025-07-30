@@ -4,8 +4,9 @@
 
 void TimeSystem::OnUpdate()
 {
+    auto& dt = registry->getSingleton<DeltaTime>();
     registry->ForEach<Time>([&](Entity entity, Time& time) {
-        time.time -= registry->getSingleton<DeltaTime>().deltaTime;
+        time.time -= dt.deltaTime;
         if (time.time <= 0) {
             registry->getEventBus().emit(DeadEvent{entity});
         }

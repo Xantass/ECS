@@ -5,6 +5,7 @@ set(SRC
     src/InputAction.cpp
     src/ReactionSystem.cpp
     src/systems/BulletSystem.cpp
+    src/systems/ResetVelocitySystem.cpp
 )
 
 add_executable(rtype ${SRC})

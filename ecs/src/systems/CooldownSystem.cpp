@@ -3,7 +3,8 @@
 
 void CooldownSystem::OnUpdate()
 {
+    auto& dt = registry->getSingleton<DeltaTime>();
     registry->ForEach<Cooldown>([&](Entity /*entity*/, Cooldown& cooldown) {
-        cooldown.timer += registry->getSingleton<DeltaTime>().deltaTime;
+        cooldown.timer += dt.deltaTime;
     });
 }

@@ -18,7 +18,7 @@ Engine::~Engine() {
 
 void Engine::init(std::string pathAssets) {
     InitWindow(screenWidth, screenHeight, windowTitle);
-    ToggleFullscreen();
+    // ToggleFullscreen();
     SetTargetFPS(60);
     autoRegister(registry, *this);
     registry.getAssetManager().loadAllAssets(pathAssets);

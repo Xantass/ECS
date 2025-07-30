@@ -22,6 +22,7 @@
 #include "GravitySystem.hpp"
 #include "LifeSystem.hpp"
 #include "TimeSystem.hpp"
+#include "ResetVelocitySystem.hpp"
 
 void autoRegister(Registry& registry, Engine& engine) {
     registry.registerComponent<Bullet>();
@@ -48,4 +49,5 @@ void autoRegister(Registry& registry, Engine& engine) {
     engine.registerSystem<GravitySystem>();
     engine.registerSystem<LifeSystem>();
     engine.registerSystem<TimeSystem>();
+    engine.registerSystem<ResetVelocitySystem>();
 }

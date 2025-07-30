@@ -12,16 +12,8 @@
 #include "Gamepad.hpp"
 #include "raylib.h"
 #include "EventBus.hpp"
-#include "Injectable.hpp"
 
-class InputSystem : public SystemBase<Velocity, MainPlayer>, public Injectable<EventBus> {
+class InputSystem : public SystemBase<Velocity, MainPlayer> {
 public:
     void OnUpdate() override;
-
-    INJECTABLE_MEMBERS(
-        EventBus* eventBus = nullptr;
-    )
 };
-
-template<>
-inline EventBus*& InputSystem::getMember<EventBus>() { return eventBus; }

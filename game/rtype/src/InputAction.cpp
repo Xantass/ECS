@@ -58,7 +58,7 @@ void setupActions(Registry &registry, Entity playerId)
 
         if (cooldown.timer < cooldown.interval) return;
         auto bullet = registry.createEntity();
-        std::cout << "Bullet created: " << bullet << std::endl;
+        // std::cout << "Bullet created: " << bullet << std::endl;
         cooldown.timer = 0.0f;
         registry.addComponent(bullet, Time{2.0f});
         registry.addComponent(bullet, Position{pos.x + static_cast<float>(registry.getAssetManager().getFrame("rocket").width) / 2, pos.y + static_cast<float>(registry.getAssetManager().getFrame("rocket").height) / 2});

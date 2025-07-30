@@ -4,16 +4,8 @@
 #include "DeadEvent.hpp"
 #include "System.hpp"
 #include "EventBus.hpp"
-#include "Injectable.hpp"
 
-class LifeSystem : public SystemBase<Health>, public Injectable<EventBus> {
+class LifeSystem : public SystemBase<Health> {
 public:
     void OnUpdate() override;
-
-    INJECTABLE_MEMBERS(
-        EventBus* eventBus = nullptr;
-    )
 };
-
-template<>
-inline EventBus*& LifeSystem::getMember<EventBus>() { return eventBus; }
