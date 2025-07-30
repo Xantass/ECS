@@ -12,6 +12,8 @@ public:
 
     INJECTABLE_MEMBERS(
         DeltaTime* deltaTime = nullptr;
-        template<> DeltaTime*& getMember<DeltaTime>() { return deltaTime; }
     )
 };
+
+template<>
+inline DeltaTime*& TimeSystem::getMember<DeltaTime>() { return deltaTime; }
