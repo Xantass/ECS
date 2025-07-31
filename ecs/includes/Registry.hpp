@@ -97,6 +97,7 @@ public:
     std::queue<Entity> &getAvailableEntities();
     AssetManager& getAssetManager();
     EventBus& getEventBus();
+    bool isAlive(Entity entity);
 
     template <typename T>
     void registerComponent()

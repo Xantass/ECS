@@ -44,3 +44,8 @@ EventBus& Registry::getEventBus()
 {
     return eventBus;
 }
+
+bool Registry::isAlive(Entity entity)
+{
+    return entitySignatures[entity].any();
+}

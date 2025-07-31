@@ -63,12 +63,14 @@ void setupActions(Registry &registry, Entity playerId)
         auto bullet = registry.createEntity();
         // std::cout << "Bullet created: " << bullet << std::endl;
         cooldown.timer = 0.0f;
+        Frame frame = registry.getAssetManager().getFrame("rocket");
         registry.addComponent(bullet, Time{2.0f});
-        registry.addComponent(bullet, Position{pos.x + static_cast<float>(registry.getAssetManager().getFrame("rocket").width) / 2, pos.y + static_cast<float>(registry.getAssetManager().getFrame("rocket").height) / 2});
+        // ajout de 10 pour que le projectile soit plus loin du joueur
+        registry.addComponent(bullet, Position{pos.x + frame.width + 10, pos.y + frame.height / 2});
         registry.addComponent(bullet, Velocity{500, 0});
         registry.addComponent(bullet, Bullet{50});
-        registry.addComponent(bullet, Sprite{registry.getAssetManager().getTexture("Projectiles"), registry.getAssetManager().getFrame("rocket")});
-        registry.addComponent(bullet, Collider{static_cast<float>(registry.getAssetManager().getFrame("rocket").width) * SCALE, static_cast<float>(registry.getAssetManager().getFrame("rocket").height) * SCALE});
+        registry.addComponent(bullet, Sprite{registry.getAssetManager().getTexture("Projectiles"), frame});
+        registry.addComponent(bullet, Collider{static_cast<float>(frame.width) * SCALE, static_cast<float>(frame.height) * SCALE});
     };
     actions[InputType::KeyTab] = [&registry]()
     {

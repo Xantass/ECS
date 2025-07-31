@@ -4,6 +4,18 @@
 void RenderSystem::OnUpdate()
 {
     // std::cout << "RenderSystem" << std::endl;
+
+    const int cellSize = 64;
+    const int screenWidth = GetScreenWidth();
+    const int screenHeight = GetScreenHeight();
+
+    for (int x = 0; x < screenWidth; x += cellSize) {
+        DrawLine(x, 0, x, screenHeight, {0, 255, 0, 120});
+    }
+    for (int y = 0; y < screenHeight; y += cellSize) {
+        DrawLine(0, y, screenWidth, y, {0, 255, 0, 120});
+    }
+
     registry->ForEach<Position, Sprite>([](Entity /*entity*/, Position& pos, Sprite& sprite) {
         // std::cout << "RenderSystem entity: " << entity << std::endl;
         Rectangle src = { (float)sprite.frame.x, (float)sprite.frame.y, (float)sprite.frame.width, (float)sprite.frame.height };
