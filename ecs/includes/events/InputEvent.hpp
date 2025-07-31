@@ -8,6 +8,7 @@ enum class InputType {
     KeyUp,
     KeyDown,
     KeySpace,
+    KeyTab,
     KeyNone,
 };
 

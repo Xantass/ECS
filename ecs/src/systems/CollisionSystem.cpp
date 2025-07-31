@@ -1,6 +1,9 @@
 #include "CollisionSystem.hpp"
 #include "Registry.hpp"
 
+#define SCALE 4.0f
+
+
 void CollisionSystem::OnUpdate()
 {
     // std::cout << "CollisionSystem" << std::endl;
@@ -40,9 +43,9 @@ void CollisionSystem::OnUpdate()
 bool CollisionSystem::checkAABBCollision(const Position &aPos, const Collider &aCol, const Position &bPos, const Collider &bCol)
 {
     return (
-        aPos.x < bPos.x + bCol.width &&
-        aPos.x + aCol.width > bPos.x &&
-        aPos.y < bPos.y + bCol.height &&
-        aPos.y + aCol.height > bPos.y
+        aPos.x < bPos.x + bCol.width * SCALE &&
+        aPos.x + aCol.width * SCALE > bPos.x &&
+        aPos.y < bPos.y + bCol.height * SCALE &&
+        aPos.y + aCol.height * SCALE > bPos.y
     );
 }

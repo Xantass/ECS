@@ -8,5 +8,6 @@
     { "name": "GravitySystem" },
     { "name": "LifeSystem" },
     { "name": "TimeSystem" },
-    { "name": "ResetVelocitySystem" }
+    { "name": "ResetVelocitySystem" },
+    { "name": "DebugDrawSystem" }
   ]

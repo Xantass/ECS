@@ -11,3 +11,4 @@ Health
 Gamepad
 Time
 MainPlayer
+CooldownInput

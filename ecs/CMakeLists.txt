@@ -8,6 +8,7 @@ set(SRC
     src/systems/RenderSystem.cpp
     src/systems/LifeSystem.cpp
     src/systems/TimeSystem.cpp
+    src/systems/DebugDrawSystem.cpp
 )
 
 add_library(ecs ${SRC})

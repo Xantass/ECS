@@ -3,6 +3,7 @@
 #include "Bullet.hpp"
 #include "Collider.hpp"
 #include "Cooldown.hpp"
+#include "CooldownInput.hpp"
 #include "Enemy.hpp"
 #include "Gamepad.hpp"
 #include "Gravity.hpp"
@@ -23,11 +24,13 @@
 #include "LifeSystem.hpp"
 #include "TimeSystem.hpp"
 #include "ResetVelocitySystem.hpp"
+#include "DebugDrawSystem.hpp"
 
 void autoRegister(Registry& registry, Engine& engine) {
     registry.registerComponent<Bullet>();
     registry.registerComponent<Collider>();
     registry.registerComponent<Cooldown>();
+    registry.registerComponent<CooldownInput>();
     registry.registerComponent<Enemy>();
     registry.registerComponent<Gamepad>();
     registry.registerComponent<Gravity>();
@@ -50,4 +53,5 @@ void autoRegister(Registry& registry, Engine& engine) {
     engine.registerSystem<LifeSystem>();
     engine.registerSystem<TimeSystem>();
     engine.registerSystem<ResetVelocitySystem>();
+    engine.registerSystem<DebugDrawSystem>();
 }

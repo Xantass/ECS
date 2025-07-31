@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include <iostream>
 #include "DeltaTime.hpp"
+#include "Debug.hpp"
 #include "Registry.hpp"
 #include "System.hpp"
 
@@ -22,6 +23,7 @@ void Engine::init(std::string pathAssets) {
     SetTargetFPS(60);
     autoRegister(registry, *this);
     registry.getAssetManager().loadAllAssets(pathAssets);
+    registry.setSingleton<Debug>({false});
 }
 
 void Engine::shutdown() {
@@ -34,6 +36,7 @@ Registry& Engine::getRegistry() {
 
 void Engine::run() {
     float currentTime = GetTime();
+    std::cout << "fixedDeltaTime: " << fixedDeltaTime << std::endl;
     while (!WindowShouldClose()) {
         float newTime = GetTime();
         float frameTime = newTime - currentTime;

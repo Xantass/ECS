@@ -8,6 +8,9 @@
 #include "Cooldown.hpp"
 #include "Speed.hpp"
 #include "Time.hpp"
+#include "Debug.hpp"
+
+#define SCALE 4.0f
 
 std::map<InputType, InputAction> actions;
 
@@ -65,7 +68,12 @@ void setupActions(Registry &registry, Entity playerId)
         registry.addComponent(bullet, Velocity{500, 0});
         registry.addComponent(bullet, Bullet{50});
         registry.addComponent(bullet, Sprite{registry.getAssetManager().getTexture("Projectiles"), registry.getAssetManager().getFrame("rocket")});
-        registry.addComponent(bullet, Collider{static_cast<float>(registry.getAssetManager().getFrame("rocket").width), static_cast<float>(registry.getAssetManager().getFrame("rocket").height)});
+        registry.addComponent(bullet, Collider{static_cast<float>(registry.getAssetManager().getFrame("rocket").width) * SCALE, static_cast<float>(registry.getAssetManager().getFrame("rocket").height) * SCALE});
+    };
+    actions[InputType::KeyTab] = [&registry]()
+    {
+        auto& debug = registry.getSingleton<Debug>();
+        debug.collider = !debug.collider;
     };
     actions[InputType::KeyNone] = [&registry, playerId]()
     {

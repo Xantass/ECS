@@ -1,32 +1,39 @@
 #include "InputSystem.hpp"
 #include "Registry.hpp"
 
+struct KeyMap { InputType type; int key; };
+        std::vector<KeyMap> keys = {
+            {InputType::KeyRight, KEY_RIGHT},
+            {InputType::KeyLeft,  KEY_LEFT},
+            {InputType::KeyDown,  KEY_DOWN},
+            {InputType::KeyUp,    KEY_UP},
+            {InputType::KeySpace, KEY_SPACE},
+            {InputType::KeyTab, KEY_TAB}
+        };
+
 void InputSystem::OnUpdate()
 {
     auto& eventBus = registry->getEventBus();
-    registry->ForEach<Velocity, MainPlayer>([&](Entity entity, Velocity& /*vel*/, MainPlayer& /*player*/) {
-        bool isPressed = false;
-        if (IsKeyDown(KEY_RIGHT)) {
-            eventBus.emit(InputEvent{InputType::KeyRight, entity});
-            isPressed = true;
+    auto& dt = registry->getSingleton<DeltaTime>();
+    const float inputDelay = 0.2f;
+
+    registry->ForEach<CooldownInput>([&](Entity entity, CooldownInput& cooldown) {
+
+        bool anyPressed = false;
+        for (auto& k : keys) {
+            cooldown.timers[k.type] += dt.deltaTime;
+            if (IsKeyDown(k.key) && k.key == KEY_TAB && cooldown.timers[k.type] >= inputDelay) {
+                eventBus.emit(InputEvent{k.type, entity});
+                cooldown.timers[k.type] = 0.0f;
+                anyPressed = true;
+            } else if (IsKeyDown(k.key) && k.key != KEY_TAB) {
+                eventBus.emit(InputEvent{k.type, entity});
+                cooldown.timers[k.type] = 0.0f;
+                anyPressed = true;
+            }
         }
-        if (IsKeyDown(KEY_LEFT)) {
-            eventBus.emit(InputEvent{InputType::KeyLeft, entity});
-            isPressed = true;
-        }
-        if (IsKeyDown(KEY_DOWN)) {
-            eventBus.emit(InputEvent{InputType::KeyDown, entity});
-            isPressed = true;
-        }
-        if (IsKeyDown(KEY_UP)) {
-            eventBus.emit(InputEvent{InputType::KeyUp, entity});
-            isPressed = true;
-        }
-        if (IsKeyDown(KEY_SPACE)) {
-            eventBus.emit(InputEvent{InputType::KeySpace, entity});
-            isPressed = true;
-        }
-        if (isPressed == false)
+        if (!anyPressed) {
             eventBus.emit(InputEvent{InputType::KeyNone, entity});
+        }
     });
 }
